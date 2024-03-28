@@ -10,7 +10,7 @@ async function getInfo(accessToken) {
 		var {user_id, session_id} = jwt.verify(accessToken, access_token_key)
 		var userRecord = (await user.findOne({_id: user_id}).select('-password')).toObject()
 
-		this.userInfo=userRecord //this object isinstance of class UserService
+		this.userInfo = userRecord //this object isinstance of class UserService
 
 		return userRecord
 	} catch (err) {
