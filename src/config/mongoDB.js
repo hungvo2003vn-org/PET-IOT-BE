@@ -5,10 +5,10 @@ async function connect() {
     try {
         mongoose.set('strictQuery', false);
         await mongoose.connect(process.env.MONGO_DB);
-        console.log("connect successfuly");
+        console.log("connect successfully");
     }
     catch(error){
-        console.log("connect failure2");
+        console.log("connect failure!");
     }
 }
 export default {connect}
