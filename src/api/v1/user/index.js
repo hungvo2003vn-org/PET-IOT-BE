@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import getInfo from './controllers/getInfor.js'
+import getInfo from './controllers/getInfo.js'
 import login from './controllers/login.js'
 import register from './controllers/register.js'
 import refreshAccessToken from './controllers/refreshAccessToken.js'

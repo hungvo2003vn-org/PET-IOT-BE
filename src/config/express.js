@@ -1,13 +1,12 @@
 import express from 'express'
 import cors from 'cors'
 import router from '../routers/index.js'
-import configSwagger from './swagger.js'
 import {} from "dotenv/config";
 import db from "./mongoDB.js";
 import {createServer} from 'http'
 import {initializeSocketServer} from "./socketIo.js"
 
-const port =  8000
+const port = process.env.PORT || 8000
 
 const configExpressApp = async (app) => {
 	const httpServer = createServer(app)
@@ -32,7 +31,7 @@ const configExpressApp = async (app) => {
 			res.status(500).json({message: err.message})
 		}
 	})
-	configSwagger(app)
+	
 	initializeSocketServer(httpServer)
 	httpServer.listen(app.get('port'), async () => {
 		try {
