@@ -5,6 +5,7 @@ import {} from "dotenv/config";
 import db from "./mongoDB.js";
 import {createServer} from 'http'
 import {initializeSocketServer} from "./socketIo.js"
+import {initializeMQTTClient} from './hiveMQ.js';
 
 const port = process.env.PORT || 8000
 
@@ -31,7 +32,7 @@ const configExpressApp = async (app) => {
 			res.status(500).json({message: err.message})
 		}
 	})
-	
+	initializeMQTTClient()
 	initializeSocketServer(httpServer)
 	httpServer.listen(app.get('port'), async () => {
 		try {
