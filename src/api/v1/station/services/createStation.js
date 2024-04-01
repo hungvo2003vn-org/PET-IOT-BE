@@ -14,16 +14,9 @@ async function createStation({
     user_id
 }) {
 
-    // Check station_id
-    if (!station_id.match(/^[0-9a-fA-F]{24}$/)) {
-        return Promise.reject ({
-            status: 404,
-            message: `The feeding station with id: ${station_id} does not exist!`
-        });
-    }
-
     // Check station
-    let found_station = await station.findOne({station_id})
+    let found_station = await station.findOne({station_id: station_id})
+    
     if (!found_station){
         return Promise.reject({
             status: 404,
@@ -32,10 +25,10 @@ async function createStation({
     }
 
     // Check user
-    let found_user = await user.findOne({user_id});
+    let found_user = await user.findOne({_id: user_id});
     
     // Check pet
-    let found_pet = await pet.findOne({pet_id});
+    let found_pet = await pet.findOne({_id: pet_id});
 
     //Check mode
     if (!mode){
@@ -43,22 +36,38 @@ async function createStation({
     }
 
     // Create new station
-    const newStation = await station.create({
-        box_volumn,
-        box_remain,
-        food_name,
-        disk_remain,
-        mode,
-        soundType,
-        pet_id,
-        user_id
-    });
+    const newStation = await station
+        .findOneAndUpdate(
+            {station_id: station_id},
+            {
+                box_volumn,
+                box_remain,
+                food_name,
+                disk_remain,
+                mode,
+                soundType,
+                pet_id,
+                user_id
+            },
+            { new: true }
+        )
+        .select(
+            `
+                -_id
+                -feedingLogs_finish 
+                -feedingLogs_inProgress 
+                -feedingLogs_new
+                -__v
+                -createdAt
+                -updatedAt
+            `
+        )
 
     // Update userInfo
     if (found_user) {
         await user.updateOne(
             { _id: user_id },
-            { $push: { feedingStations: newStation._id } }
+            { $push: { feedingStations: newStation.station_id } }
         );
     }
 
@@ -66,7 +75,7 @@ async function createStation({
     if (found_pet) {
         await pet.updateOne(
             { _id: pet_id },
-            { $set: { feedingStation: newStation._id } }
+            { $set: { feedingStation: newStation.station_id } }
         );
     }
     

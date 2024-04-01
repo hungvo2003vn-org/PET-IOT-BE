@@ -11,16 +11,8 @@ async function editStation({
     pet_id,
 }) {
 
-    // Check station_id
-    if (!station_id.match(/^[0-9a-fA-F]{24}$/)) {
-        return Promise.reject ({
-            status: 404,
-            message: `The feeding station with id: ${station_id} does not exist!`
-        });
-    }
-
     // Find the station with the provided ID
-    const existingStation = await station.findById({_id: station_id});
+    const existingStation = await station.findOne({station_id: station_id});
 
     // Check if the station exists
     if (!existingStation) {
@@ -43,11 +35,12 @@ async function editStation({
     // Find and update the station
     const updatedStation = await station
         .findOneAndUpdate(
-            { _id: station_id },
+            { station_id: station_id },
             updateFields,
             { new: true } // Return the updated document
         )
         .select(`
+            -_id
             -feedingLogs_finish 
             -feedingLogs_inProgress 
             -feedingLogs_new

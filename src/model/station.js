@@ -2,6 +2,17 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 const station = new Schema(
 	{
+        station_id: {
+            type: String, 
+            maxLength: 16, 
+            default: () => {
+                const timestamp = Date.now().toString(36); 
+                const randomChars = Math.random().toString(36).slice(2, 8);
+                const uniqueId = timestamp + randomChars;
+                return uniqueId.slice(0, 16);
+            },
+            unique: true},
+        
 		box_volumn: {type: Number, default: null},
         box_remain: {type: Number, default: null},
         food_name: {type: String, default: null},
