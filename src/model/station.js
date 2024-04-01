@@ -9,8 +9,8 @@ const station = new Schema(
         mode: {type: Boolean, default: false},
         soundType: {type: String, default: null},
 
-        pet: {type: String, default: null},
-        user: {type: String, default: null},
+        pet_id: {type: String, default: null},
+        user_id: {type: String, default: null},
         feedingLogs_finish: {type: [String]},
         feedingLogs_inProgress: {type: [String]},
         feedingLogs_new: {type: [String]}
