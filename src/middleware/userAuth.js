@@ -10,7 +10,7 @@ export const authenticate = async (req, res, next) => {
         const accessToken = req.headers.authorization.split(' ')[1]
 		var {user_id, session_id} = jwt.verify(accessToken, access_token_key)
         req.userService = new UserService()
-        req.userInfo = await getInfo(accessToken)
+        req.userService.userInfo = await getInfo(accessToken)
         next()
     } catch (err) {
         console.log(err)
