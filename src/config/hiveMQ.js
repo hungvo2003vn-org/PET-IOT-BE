@@ -20,7 +20,7 @@ function initializeMQTTClient() {
     console.error('MQTT', error.message);
   });
 
-  mqtt_client.subscribe('station/register/send');
+  mqtt_client.subscribe('station/register/device/send');
   mqtt_client.subscribe('station/info')
   mqtt_client.subscribe('feedRecord/start/response')
 }
