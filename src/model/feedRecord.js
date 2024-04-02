@@ -12,8 +12,8 @@ const feedingLog = new Schema(
         disk_remain: {type: Number, default: null},
         start_amount: {type: Number, default: null},
 
-        feedingStation: {type: String, default: null},
-        pet: {type: String, default: null},
+        station_id: {type: String, default: null},
+        pet_id: {type: String, default: null},
 	},
 
 	{
