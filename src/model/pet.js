@@ -24,9 +24,9 @@ const pet = new Schema(
             weight: {type: Number, default: null},
             record_date: {type: Date, default: null}
         }],
-        feedingStation: {type: String, default: null},
+        station_id: {type: String, default: null},
         feedingLogs: {type: [String]},
-        user: {type: String, default: null}
+        user_id: {type: String, default: null}
 	},
 
 	{

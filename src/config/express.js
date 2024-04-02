@@ -6,6 +6,7 @@ import db from "./mongoDB.js";
 import {createServer} from 'http'
 import {initializeSocketServer} from "./socketIo.js"
 import {initializeMQTTClient} from './hiveMQ.js';
+import handleMQTTClient from './handleDevice.js'
 
 const port = process.env.PORT || 8000
 
@@ -33,6 +34,7 @@ const configExpressApp = async (app) => {
 		}
 	})
 	initializeMQTTClient()
+	handleMQTTClient()
 	initializeSocketServer(httpServer)
 	httpServer.listen(app.get('port'), async () => {
 		try {

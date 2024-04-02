@@ -20,16 +20,10 @@ function initializeMQTTClient() {
     console.error('MQTT', error.message);
   });
 
-  mqtt_client.on('message', function (topic, message) {
-    console.log('MQTT Received message:', message.toString());
-  });
-
-  mqtt_client.subscribe('HungVo/testTopic');
+  mqtt_client.subscribe('station/register/send');
+  mqtt_client.subscribe('station/info')
+  mqtt_client.subscribe('feedRecord/start/response')
 }
 
-// Example MQTT publish
-setInterval(() => {
-  mqtt_client.publish('HungVo/testTopic', 'Hello from Quan 9');
-}, 2000)
 
 export { initializeMQTTClient, mqtt_client };
