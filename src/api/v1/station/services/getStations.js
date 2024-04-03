@@ -25,6 +25,10 @@ async function getStations({
             message: `The feeding station with id: ${station_id} not found!`
         })
     }
+
+    if(station_id){
+        return allStations[0]
+    }
     
     return allStations
 }
