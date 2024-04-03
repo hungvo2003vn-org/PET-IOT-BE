@@ -1,4 +1,4 @@
-import pet from '#~/models/pet.js'
+import pet from '#~/model/pet.js'
 
 async function createPet({
   type,
@@ -8,7 +8,7 @@ async function createPet({
   name,
   user_note,
   image,
-  medical_records,
+
   feedingStation,
   user,
 }) {
@@ -20,7 +20,7 @@ async function createPet({
     name,
     user_note,
     image,
-    medical_records,
+   
     feedingStation,
     user,
   })

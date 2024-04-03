@@ -1,5 +1,5 @@
 import PetService from '../services/index.js'
-import pet from '#~/model/pet.js'
+
 
 const createPet = async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ const createPet = async (req, res, next) => {
       feedingStation,
       user,
     } = req.body
-    const data = await req.PetService.createPet({
+    const data = await new PetService().createPet({
       type,
       breed,
       birth_date,
@@ -23,7 +23,7 @@ const createPet = async (req, res, next) => {
       name,
       user_note,
       image,
-      medical_records,
+    
       feedingStation,
       user,
     })

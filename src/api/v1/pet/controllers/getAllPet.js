@@ -15,26 +15,3 @@ const getAllPets = async (req, res, next) => {
 }
 
 export default getAllPets
-/*
-import Pet from './petModel.js'; // Import pet model
-
-const getAllPets = async () => {
-    try {
-        // Lấy tất cả các pet từ cơ sở dữ liệu
-        const pets = await Pet.find();
-
-        if (pets.length === 0) {
-            console.log('No pets found');
-            return [];
-        }
-
-        console.log('All pets:', pets);
-        return pets;
-    } catch (error) {
-        console.error('Error getting pets:', error);
-        return [];
-    }
-};
-
-// Sử dụng
-getAllPets();*/
