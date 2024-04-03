@@ -22,6 +22,11 @@ async function createStation({
             status: 404,
             message: `The feeding station with id: ${station_id} does not exist!`
         })
+    } else if(found_station.user_id) {
+        return Promise.reject({
+            status: 503,
+            message: `The feeding station with id: ${station_id} already setup by user!`
+        })
     }
 
     // Check user
@@ -35,7 +40,6 @@ async function createStation({
         mode = false
     }
 
-    // Create new station
     const newStation = await station
         .findOneAndUpdate(
             {station_id: station_id},
