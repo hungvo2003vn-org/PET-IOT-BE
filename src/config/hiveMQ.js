@@ -22,7 +22,7 @@ function initializeMQTTClient() {
 
   mqtt_client.subscribe('station/register/device/send');
   mqtt_client.subscribe('station/info')
-  mqtt_client.subscribe('feedRecord/start/response')
+  mqtt_client.subscribe('feedRecord/start/device/response')
 }
 
 
