@@ -12,7 +12,9 @@ const station = new Schema(
                 return uniqueId.slice(0, 16);
             },
             unique: true},
-        
+
+        station_name: {type: String, default: null},
+        station_status: {type: Boolean, default: true},
 		box_volumn: {type: Number, default: null},
         box_remain: {type: Number, default: null},
         food_name: {type: String, default: null},
