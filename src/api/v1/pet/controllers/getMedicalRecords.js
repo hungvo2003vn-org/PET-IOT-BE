@@ -1,11 +1,11 @@
 import PetService from '../services/index.js'
 
-const getRecord = async (req, res, next) => {
+const getMedicalRecords = async (req, res, next) => {
   try {
     const { petId } = req.query
     
 
-    const data = await new PetService().getRecord({ petId })
+    const data = await new PetService().getMedicalRecords({ petId })
     if (!data) {
       res.status(404).send({ message: 'Pet not found' })
     }
@@ -16,4 +16,4 @@ const getRecord = async (req, res, next) => {
   }
 }
 
-export default getRecord
+export default getMedicalRecords

@@ -11,9 +11,10 @@ const feedingLog = new Schema(
         status: {type: String, default: null}, //New, In Progress, Finish
         disk_remain: {type: Number, default: null},
         start_amount: {type: Number, default: null},
+        mode: {type: Boolean, default: false},
 
-        feedingStation: {type: String, default: null},
-        pet: {type: String, default: null},
+        station_id: {type: String, default: null},
+        pet_id: {type: String, default: null},
 	},
 
 	{

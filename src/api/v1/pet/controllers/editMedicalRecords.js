@@ -1,9 +1,9 @@
 import PetService from '../services/index.js'
 
-const createRecord = async (req, res, next) => {
+const editMedicalRecords = async (req, res, next) => {
   try {
     const { petId, recordId, date, description } = req.body
-    const data = await new PetService().editRecord({
+    const data = await new PetService().editMedicalRecords({
       petId,
       recordId,
       date,
@@ -15,4 +15,4 @@ const createRecord = async (req, res, next) => {
   }
 }
 
-export default createRecord
+export default editMedicalRecords

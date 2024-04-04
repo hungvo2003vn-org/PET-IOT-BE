@@ -1,6 +1,6 @@
 import pet from '#~/model/pet.js'
 
-async function getRecord({ petId }) {
+async function getMedicalRecords({ petId }) {
   var findPet = await pet.findById( petId );
   if (!findPet) {
     return Promise.reject({
@@ -13,4 +13,4 @@ async function getRecord({ petId }) {
   return records
 }
 
-export default getRecord
+export default getMedicalRecords

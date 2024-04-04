@@ -1,7 +1,7 @@
 import pet from '#~/model/pet.js'
 import { io } from '#~/config/socketIo.js'
 
-async function editRecord({ petId, recordId, date, description }) {
+async function editMedicalRecords({ petId, recordId, date, description }) {
   try {
     // Bước 1: Lấy pet và records
     const findPet = await pet.findById(petId)
@@ -32,4 +32,4 @@ async function editRecord({ petId, recordId, date, description }) {
     throw error
   }
 }
-export default editRecord
+export default editMedicalRecords

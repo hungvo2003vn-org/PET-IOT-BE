@@ -1,6 +1,6 @@
 import pet from '#~/model/pet.js'
 
-async function createRecord({ petId, date, description }) {
+async function addMedicalRecords({ petId, date, description }) {
   try {
     const findPet = await pet.findById(petId)
     if (!findPet) {
@@ -16,5 +16,5 @@ async function createRecord({ petId, date, description }) {
 
   return petRecord
 }
-export default createRecord
+export default addMedicalRecords
 
