@@ -7,6 +7,7 @@ import {createServer} from 'http'
 import {initializeSocketServer} from "./socketIo.js"
 import {initializeMQTTClient} from './hiveMQ.js';
 import handleMQTTClient from './handleDevice.js'
+import { initScheduler } from './scheduler.js';
 
 const port = process.env.PORT || 8000
 
@@ -35,6 +36,7 @@ const configExpressApp = async (app) => {
 	})
 	initializeMQTTClient()
 	handleMQTTClient()
+	initScheduler()
 	initializeSocketServer(httpServer)
 	httpServer.listen(app.get('port'), async () => {
 		try {
