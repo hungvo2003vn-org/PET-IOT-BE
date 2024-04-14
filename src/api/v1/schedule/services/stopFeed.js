@@ -7,11 +7,26 @@ async function stopFeed({
 }) {
 
     //Check if the schedule is existed or not
-    let checkSchedule = isValidObjectId(schedule_id) ? await feedingLog.findById(schedule_id) : null
+    if(!isValidObjectId(schedule_id)) {
+        return Promise.reject({
+            status: 404,
+            message: `The schedule with id=${schedule_id} was not found!`
+        })
+    }
+
+    const checkSchedule = await feedingLog.findById(schedule_id)
     if(!checkSchedule) {
         return Promise.reject({
             status: 404,
             message: `The schedule with id=${schedule_id} was not found!`
+        })
+    }
+
+    //No need to update if the schedule already stopped
+    if(checkSchedule.status === "Finish"){
+        return Promise.reject({
+            status: 503,
+            message: `The schedule with id=${schedule_id} has already stopped!`
         })
     }
 

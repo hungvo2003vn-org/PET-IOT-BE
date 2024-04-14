@@ -4,6 +4,7 @@ import isValidDateFormat from "#~/middleware/checkValidDate.js";
 import { scheduler } from "#~/config/scheduler.js";
 import startFeed from "./startFeed.js";
 import stopFeed from "./stopFeed.js";
+import {} from 'dotenv/config'
 
 async function createSchedule({
     station_id,
@@ -21,10 +22,23 @@ async function createSchedule({
     }
 
     //Create new Datetime format
-    start_time = new Date(start_time)
-    end_time = new Date(end_time)
-    start_time = new Date(start_time.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
-    end_time = new Date(end_time.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
+    const timezone = process.env.TIMEZONE; // Default to 0 if TIMEZONE_OFFSET is not set
+    let current_time = new Date(Date.now());
+    start_time = new Date(start_time);
+    end_time = new Date(end_time);
+
+    //Change to Same timeZone
+    current_time = new Date(current_time.toLocaleString('en-US', { timeZone: timezone }));
+    start_time = new Date(start_time.toLocaleString('en-US', { timeZone: timezone }));
+    end_time = new Date(end_time.toLocaleString('en-US', { timeZone: timezone }));
+    
+    //Check valid date range
+    if(start_time >= end_time || start_time < current_time) {
+        return Promise.reject({
+            status: 503,
+            message: `Please enter end_time > start_time > current_time`
+        })
+    }
 
     //Check if the station is exist or not
     const checkStation = await station.findOne({station_id: station_id})
@@ -50,31 +64,27 @@ async function createSchedule({
     //TODO: Set time-scheduler to trigger startFeed()
     scheduler.scheduleJob(start_time, async () => {
         try {
-            console.log(`StartFeed at ${start_time}`)
             await startFeed({
                 station_id,
                 feed_amount,
                 schedule_id: newSchedule._id.toString(),
                 start_time
             });
-            console.log(`Done StartFeed at ${start_time}`)
         } catch (error) {
-            console.error('Error in startFeed scheduler:', error);
+            console.log(error)
         }
     });
 
-    // //TODO: Set time-scheduler to trigger stopFeed()
-    // scheduler.scheduleJob(end_time, async () => {
-    //     try {
-    //         console.log(`EndFeed at ${end_time}`)
-    //         await stopFeed({
-    //             schedule_id: newSchedule._id.toString()
-    //         });
-    //         console.log(`Done EndFeed at ${end_time}`)
-    //     } catch (error) {
-    //         console.error('Error in stopFeed scheduler:', error);
-    //     }
-    // });
+    //TODO: Set time-scheduler to trigger stopFeed()
+    scheduler.scheduleJob(end_time, async () => {
+        try {
+            await stopFeed({
+                schedule_id: newSchedule._id.toString()
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    });
 
 
     return newSchedule

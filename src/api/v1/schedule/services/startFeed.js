@@ -36,24 +36,24 @@ async function startFeed({
     //Receive Feeding Signal from the device
     let start_amount = null
 
-    const responsePromise = new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => {
-            reject({
-                status: 504,
-                message: 'Timeout: Device did not respond within 10 seconds'
-            })
-        }, 10000)
+    // const responsePromise = new Promise((resolve, reject) => {
+    //     const timeout = setTimeout(() => {
+    //         reject({
+    //             status: 504,
+    //             message: 'Timeout: Device did not respond within 10 seconds'
+    //         })
+    //     }, 10000)
 
-        mqtt_client.on('message', function (topic, message) {
-            message = JSON.parse(message)
+    //     mqtt_client.on('message', function (topic, message) {
+    //         message = JSON.parse(message)
 
-            if (topic === 'feedRecord/start/device/response') {
-                clearTimeout(timeout)
-                start_amount = message.start_amount
-                resolve(start_amount)
-            }
-        })
-    })
+    //         if (topic === 'feedRecord/start/device/response') {
+    //             clearTimeout(timeout)
+    //             start_amount = message.start_amount
+    //             resolve(start_amount)
+    //         }
+    //     })
+    // })
 
     //If the device does not response in 10 seconds, return the Timeout Error!
     // try {
