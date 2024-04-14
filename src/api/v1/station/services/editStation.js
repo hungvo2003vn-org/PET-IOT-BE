@@ -2,6 +2,7 @@ import station from "#~/model/station.js";
 
 async function editStation({
     station_id,
+    station_name,
     box_volumn,
     box_remain,
     food_name,
@@ -24,13 +25,14 @@ async function editStation({
 
     // Update station properties
     const updateFields = {};
-    if (box_volumn !== undefined) { updateFields.box_volumn = box_volumn;}
-    if (box_remain !== undefined) {updateFields.box_remain = box_remain;}
-    if (food_name !== undefined) {updateFields.food_name = food_name;}
-    if (disk_remain !== undefined) {updateFields.disk_remain = disk_remain;}
-    if (mode !== undefined) {updateFields.mode = mode;}
-    if (soundType !== undefined) {updateFields.soundType = soundType;}
-    if (pet_id !== undefined) {updateFields.pet_id = pet_id;}
+    if (station_name !== undefined && station_name !== null) { updateFields.station_name = station_name;}
+    if (box_volumn !== undefined && box_volumn !== null) { updateFields.box_volumn = box_volumn;}
+    if (box_remain !== undefined && box_remain !== null) {updateFields.box_remain = box_remain;}
+    if (food_name !== undefined && food_name !== null) {updateFields.food_name = food_name;}
+    if (disk_remain !== undefined && disk_remain !== null) {updateFields.disk_remain = disk_remain;}
+    if (mode !== undefined && mode !== null) {updateFields.mode = mode;}
+    if (soundType !== undefined && soundType !== null) {updateFields.soundType = soundType;}
+    if (pet_id !== undefined && pet_id !== null) {updateFields.pet_id = pet_id;}
 
     // Find and update the station
     const updatedStation = await station

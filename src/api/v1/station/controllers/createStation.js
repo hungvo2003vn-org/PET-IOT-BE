@@ -4,6 +4,7 @@ const createStation = async (req, res, next) => {
     try {
         const {
             station_id,
+            station_name,
             box_volumn,
             box_remain,
             food_name,
@@ -14,6 +15,7 @@ const createStation = async (req, res, next) => {
         } = req.body
         const data = await new StationService().createStation({
             station_id,
+            station_name,
             box_volumn,
             box_remain,
             food_name,
