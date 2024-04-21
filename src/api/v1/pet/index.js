@@ -10,7 +10,9 @@ import getMedicines from './controllers/getMedicines.js'
 import addHealthRecords from './controllers/addHealthRecords.js'
 import editHealthRecords from './controllers/editHealthRecords.js'
 import getHealthRecords from './controllers/getHealthRecords.js'
-
+import getPets from './controllers/getAllPet.js'
+import getPetById from './controllers/getPetById.js'
+import editPet from './controllers/editPet.js'
 import { authenticate } from '#~/middleware/userAuth.js'
 
 const pet_router = Router()
@@ -25,4 +27,7 @@ pet_router.get('/getMedicines', authenticate, getMedicines)
 pet_router.post('/addHealthRecords', authenticate, addHealthRecords)
 pet_router.put('/editHealthRecords', authenticate, editHealthRecords)
 pet_router.get('/getHealthRecords', authenticate, getHealthRecords)
+pet_router.get('/getAllPet', authenticate, getPets)
+pet_router.get('/getPetById', authenticate, getPetById)
+pet_router.put('/editPet', authenticate, editPet)
 export default pet_router
