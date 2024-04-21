@@ -4,6 +4,7 @@ import user from '#~/model/user.js';
 
 async function createStation({
     station_id,
+    station_name,
     box_volumn,
     box_remain,
     food_name,
@@ -44,6 +45,8 @@ async function createStation({
         .findOneAndUpdate(
             {station_id: station_id},
             {
+                station_name,
+                station_status: true,
                 box_volumn,
                 box_remain,
                 food_name,
