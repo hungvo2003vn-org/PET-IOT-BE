@@ -1,6 +1,7 @@
 import station from '#~/model/station.js';
 import pet from '#~/model/pet.js';
 import user from '#~/model/user.js';
+import { mqtt_client } from '#~/config/hiveMQ.js';
 
 async function createStation({
     station_id,
@@ -85,6 +86,9 @@ async function createStation({
             { $set: { feedingStation: newStation.station_id } }
         );
     }
+
+    // Send signal to device to start display the station information
+    mqtt_client.publish('station/check/server', JSON.stringify({ message: "Check live"}))
     
     return newStation;
 
