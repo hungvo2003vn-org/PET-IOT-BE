@@ -44,9 +44,10 @@ async function stopFeed({
     
     //Record the schedule information
     let end_time = checkSchedule.end_time
+    let status = (checkSchedule.status !== "In Progress") ? "Failed" : "Finish"
     const updates = {
         end_time: (end_time ? end_time : new Date()),
-        status: "Finish",
+        status: status,
         disk_remain: checkStation.disk_remain
     }
     const recordSchedule = await feedingLog.findByIdAndUpdate(
