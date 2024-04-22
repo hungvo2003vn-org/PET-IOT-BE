@@ -22,15 +22,10 @@ async function createSchedule({
     }
 
     //Create new Datetime format
-    const timezone = process.env.TIMEZONE; // Default to 0 if TIMEZONE_OFFSET is not set
-    let current_time = new Date(Date.now());
-    start_time = new Date(start_time);
-    end_time = new Date(end_time);
-
-    //Change to Same timeZone
-    current_time = new Date(current_time.toLocaleString('en-US', { timeZone: timezone }));
-    start_time = new Date(start_time.toLocaleString('en-US', { timeZone: timezone }));
-    end_time = new Date(end_time.toLocaleString('en-US', { timeZone: timezone }));
+    const timezone = process.env.TIMEZONE;
+    let current_time = new Date();
+    start_time = new Date(start_time + timezone);
+    end_time = new Date(end_time + timezone);
     
     //Check valid date range
     if(start_time >= end_time || start_time < current_time) {
