@@ -6,11 +6,10 @@ const addMedicines = async (req, res, next) => {
     const data = await new PetService().addMedicines({
       petId,
       type,
-      name,
+      name
     })
     res.status(200).json({ data })
 
-    console.log(data)
   } catch (err) {
     next(err)
   }

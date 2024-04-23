@@ -10,7 +10,6 @@ const addMedicalRecords = async (req, res, next) => {
     })
     res.status(200).json({ data })
 
-    console.log(data)
   } catch (err) {
     next(err)
   }

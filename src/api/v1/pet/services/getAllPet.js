@@ -1,7 +1,19 @@
 import pet from '#~/model/pet.js';
 
-async function getPets() {
-  const allPets = await pet.find({}); // Assuming you're using some sort of ORM like Mongoose
+async function getPets(user_id) {
+  
+  const allPets = await pet
+    .find({user_id})
+    .select(`
+      -feedingLogs
+      -createdAt
+      -updatedAt
+      -__v
+      -medical_records
+      -health_records
+      -medicines
+      -user_id
+    `)
   return allPets;
 }
 

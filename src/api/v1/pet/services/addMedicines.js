@@ -1,19 +1,30 @@
 import pet from '#~/model/pet.js'
+import isValidObjectId from '#~/middleware/checkValidId.js'
 
 async function addMedicines({ petId, type, name }) {
-  try {
-    const findPet = await pet.findById(petId)
-    if (!findPet) {
-      throw new Error('Pet not found')
-    }
 
-    findPet.medicines.push({ type, name })
-    await findPet.save()
-    return findPet
-  } catch (err) {
-    next(err)
+  if(!petId || !isValidObjectId(petId)) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
   }
 
-  return petRecord
+  const findPet = await pet.findById(petId)
+  if (!findPet) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
+  }
+
+  findPet.medicines.push({ type, name })
+  await findPet.save()
+
+  return {
+    pet_id: findPet._id.toString(),
+    medicines: findPet.medicines
+  }
+
 }
 export default addMedicines

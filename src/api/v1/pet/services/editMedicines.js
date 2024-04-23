@@ -1,35 +1,46 @@
 import pet from '#~/model/pet.js'
-import { io } from '#~/config/socketIo.js'
+import isValidObjectId from '#~/middleware/checkValidId.js'
 
 async function editMedicines({ petId, recordId, type, name }) {
-  try {
-    // Bước 1: Lấy pet và records
-    const findPet = await pet.findById(petId)
-    if (!findPet) {
-      throw new Error('Pet not found')
-    }
 
-    const medicalRecords = findPet.medicines
-    const recordToUpdate = medicalRecords.find(
-      (record) => record._id.toString() === recordId,
-    )
+  if(!petId || !isValidObjectId(petId)) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
+  }
 
-    if (!recordToUpdate) {
-      return Promise.reject({
-        status: 404,
-        message: 'Medical record not found',
-      })
-    }
+  // Bước 1: Lấy pet và records
+  const findPet = await pet.findById(petId)
+  if (!findPet) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
+  }
 
-    // Update record
-    if (type) recordToUpdate.type = type
-    if (name) recordToUpdate.name = name
+  const medicineRecords = findPet.medicines
+  const recordToUpdate = medicineRecords.find(
+    (record) => record._id.toString() === recordId,
+  )
 
-    await findPet.save()
+  if (!recordToUpdate) {
+    return Promise.reject({
+      status: 404,
+      message: 'Medicine record not found',
+    })
+  }
 
-    return { message: 'Record updated successfully' }
-  } catch (error) {
-    throw error
+  // Update record
+  if (type) recordToUpdate.type = type
+  if (name) recordToUpdate.name = name
+
+  await findPet.save()
+
+  return {
+    pet_id: findPet._id.toString(),
+    medicines: findPet.medicines,
+    updated_medicine: recordToUpdate
   }
 }
 export default editMedicines

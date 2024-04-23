@@ -12,6 +12,7 @@ import getHealthRecords from './getHealthRecords.js'
 import getPets from './getAllPet.js'
 import getPetById from './getPetById.js'
 import editPet from './editPet.js'
+import getFeedingRecord from './getFeedingRecord.js'
 
 class PetService extends UserService {
   createPet = createPet
@@ -27,5 +28,6 @@ class PetService extends UserService {
   getPets = getPets
   getPetById = getPetById
   editPet = editPet
+  getFeedingRecord = getFeedingRecord
 }
 export default PetService

@@ -2,8 +2,10 @@ import PetService from '../services/index.js';
 
 const getPets = async (req, res, next) => {
   try {
-    const pets = await new PetService().getPets();
-    res.status(200).json({ pets });
+    const user_id = req.userService.userInfo._id.toString()
+    const data = await new PetService().getPets(user_id);
+
+    res.status(200).json({ data });
   } catch (err) {
     next(err);
   }

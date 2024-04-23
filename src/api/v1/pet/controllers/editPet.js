@@ -10,9 +10,7 @@ const editPet = async (req, res, next) => {
       color,
       name,
       user_note,
-      image,
-
-      station_id,
+      image
     } = req.body
     const data = await new PetService().editPet({
       petId,
@@ -22,9 +20,7 @@ const editPet = async (req, res, next) => {
       color,
       name,
       user_note,
-      image,
-
-      station_id,
+      image
     })
     res.status(200).json({ data })
   } catch (err) {

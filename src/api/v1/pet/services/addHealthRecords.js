@@ -1,19 +1,30 @@
 import pet from '#~/model/pet.js'
+import isValidObjectId from '#~/middleware/checkValidId.js'
 
-async function addHealthRecords({ petId, status, weight, record_date }) {
-  try {
-    const findPet = await pet.findById(petId)
-    if (!findPet) {
-      throw new Error('Pet not found')
-    }
+async function addHealthRecords({ petId, status, weight }) {
 
-    findPet.health_records.push({ status, weight, record_date})
-    await findPet.save()
-    return findPet
-  } catch (err) {
-    next(err)
+  if(!petId || !isValidObjectId(petId)) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
   }
 
-  return petRecord
+  const findPet = await pet.findById(petId)
+  if (!findPet) {
+    return Promise.reject({
+      status: 404,
+      message: 'Pet not found'
+    })
+  }
+
+  findPet.health_records.push({ status, weight, record_date: new Date()})
+  await findPet.save()
+
+  return {
+    pet_id: findPet._id.toString(),
+    health_records: findPet.health_records
+  }
+  
 }
 export default addHealthRecords

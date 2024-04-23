@@ -1,8 +1,5 @@
 import PetService from '../services/index.js'
 
-
-
-
 const createPet = async (req, res, next) => {
   try {
     const {
@@ -12,13 +9,7 @@ const createPet = async (req, res, next) => {
       color,
       name,
       user_note,
-      image,
-      medical_records,
-      medicines,
-      health_records,
-      station_id,
-      feedingLogs,
-      user_id,
+      image
     } = req.body
     const data = await new PetService().createPet({
       type,
@@ -28,13 +19,9 @@ const createPet = async (req, res, next) => {
       name,
       user_note,
       image,
-      medical_records,
-      medicines,
-      health_records,
-      station_id,
-      feedingLogs,
-      user_id,
+      user_id: req.userService.userInfo._id.toString(),
     })
+    
     res.status(200).json({ data })
   } catch (err) {
     next(err)
