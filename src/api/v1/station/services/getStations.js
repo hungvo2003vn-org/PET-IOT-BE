@@ -2,9 +2,8 @@ import station from "#~/model/station.js"
 
 async function getStations({
     station_id,
-    user_id
 }) {
-    let query = { user_id: user_id}
+    let query = {}
     if (station_id) { query.station_id = station_id}
     let allStations = await station
         .find(query)
@@ -13,6 +12,7 @@ async function getStations({
             -feedingLogs_finish 
             -feedingLogs_inProgress 
             -feedingLogs_new
+            -user_id
             -__v
             -createdAt
             -updatedAt

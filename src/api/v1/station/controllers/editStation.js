@@ -10,8 +10,7 @@ const editStation = async (req, res, next) => {
             food_name,
             disk_remain,
             mode,
-            soundType,
-            pet_id,
+            soundType
         } = req.body
 
         const data = await new StationService().editStation({
@@ -22,8 +21,7 @@ const editStation = async (req, res, next) => {
             food_name,
             disk_remain,
             mode,
-            soundType,
-            pet_id,
+            soundType
         })
 
         res.status(200).json({data})

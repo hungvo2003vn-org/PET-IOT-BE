@@ -8,7 +8,16 @@ async function getInfo(accessToken) {
 	try {
 
 		var {user_id, session_id} = jwt.verify(accessToken, access_token_key)
-		var userRecord = (await user.findOne({_id: user_id}).select('-password')).toObject()
+		var userRecord = await user
+			.findOne({_id: user_id})
+			.select(`
+			-password
+			-createdAt
+			-updatedAt
+			-pets
+			-feedingStations
+			-__v
+		`)
 
 		return userRecord
 	} catch (err) {
