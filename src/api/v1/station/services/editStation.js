@@ -9,7 +9,6 @@ async function editStation({
     disk_remain,
     mode,
     soundType,
-    pet_id,
 }) {
 
     // Find the station with the provided ID
@@ -32,7 +31,6 @@ async function editStation({
     if (disk_remain !== undefined && disk_remain !== null) {updateFields.disk_remain = disk_remain;}
     if (mode !== undefined && mode !== null) {updateFields.mode = mode;}
     if (soundType !== undefined && soundType !== null) {updateFields.soundType = soundType;}
-    if (pet_id !== undefined && pet_id !== null) {updateFields.pet_id = pet_id;}
 
     // Find and update the station
     const updatedStation = await station
@@ -49,6 +47,7 @@ async function editStation({
             -__v
             -createdAt
             -updatedAt
+            -user_id
         `
         )
 
