@@ -54,7 +54,7 @@ async function assignPet({
         }
     }
 
-    // Remove from current station
+    // Remove pet from current station
     if(petRecord.station_id !== null) {
         const removeStation = await station.findOneAndUpdate(
             { station_id: petRecord.station_id},
@@ -63,6 +63,17 @@ async function assignPet({
             },
             { new: true }
         ).select(`-updatedAt`)
+    }
+
+    // Remove station from current pet
+    if(stationRecord.pet_id !== null) {
+        const removePet = await pet.findByIdAndUpdate(
+            stationRecord.pet_id,
+            {
+                station_id: null
+            },
+            { new: true }
+        )
     }
 
     // Assign both

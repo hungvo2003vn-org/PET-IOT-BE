@@ -40,9 +40,9 @@ async function startFeed({
         const timeout = setTimeout(() => {
             reject({
                 status: 504,
-                message: 'Timeout: Device did not respond within 5 seconds'
+                message: 'Timeout: Device did not respond within 10 seconds'
             })
-        }, 5000)
+        }, 10000)
 
         mqtt_client.on('message', function (topic, message) {
             message = JSON.parse(message)
